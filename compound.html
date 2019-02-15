@@ -86,6 +86,7 @@
     "a": "(params.i_nikkei.toFixed(2))",
     "dk": "((params.i_sp)*(params.k)).toFixed(2)",
     "years": "20",
+    // "final": "(params.p_sp.toFixed(2))*((100+params.i_sp.toFixed(2))/100)^(30)+(params.p_nikkei.toFixed(2))*((100+params.i_nikkei.toFixed(2))/100)^(30)+(params.p_bonds.toFixed(2))*((100+params.i_bonds.toFixed(2))/100)^(30)"
 },
   "layout": {
     "type": "OneGraphPlusSidebar",
@@ -303,17 +304,20 @@
             // }],
             "divs": [
               {
-                "html": "Let's say you have 100 yen today and want to invest it. If you invested all of it in bonds you would have 103 yen in 30 years. If you invested all of it in the Nikkei you would have 181 yen in 30 years. And if you invested all of it in the S\&P500 you would have 324 yen." 
+                "html": "Let's say you have 100 yen today and want to invest it. This model illustrates your expected earnings over the next 30 years based upon the way you split your 100 yen among the Nikkei, the S&P500, and the Japanese 10Y bonds."
               },
               {
-                "html": "`If you had invested $k_t = ${params.k}$ dollars of principal in period $t$, it would produce an output of $$\\\\color{${colors.production}}{y_t = f(k_t) = ${params.k}^{${params.i_nikkei.toFixed(2)}} = ${Math.pow(params.k,params.i_nikkei).toFixed(2)}}$$`"
+                "html": "`With your current choices, you would have ${(calcs.p_nikkei*Math.pow(calcs.i_nikkei, 30)+calcs.p_sp*Math.pow(calcs.i_sp, 30)+calcs.p_bonds*Math.pow(calcs.i_bonds, 30)).toFixed(2)} yen after thirty years.`"
               },
-              {
-                "html": "`depending on your asset allocation`"
-              },
-              {
-                "html": "calcs.p_bonds"
-              }
+              // {
+              //   "html": "`If you had invested $k_t = ${params.k}$ dollars of principal in period $t$, it would produce an output of $$\\\\color{${colors.production}}{y_t = f(k_t) = ${params.k}^{${params.i_nikkei.toFixed(2)}} = ${Math.pow(params.k,params.i_nikkei).toFixed(2)}}$$`"
+              // },
+              // {
+              //   "html": "`depending on your asset allocation`"
+              // },
+              // {
+              //   "html": "calcs.p_bonds"
+              // }
             ]
           }
         ]
