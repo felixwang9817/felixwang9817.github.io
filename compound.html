@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
-    <title>Mixed Investments Model</title>
+    <title>Compound</title>
     <link href="https://www.econgraphs.org/static/css/kg.0.1.4.css" rel="stylesheet">
     <script src="https://www.econgraphs.org/static/js/kg.0.1.4.js"></script>
 </head>
@@ -38,30 +38,30 @@
     },
     {
       "name": "i_sp",
-      "value": "4.0",
+      "value": "3.0",
       "min": "0",
       "max": "10",
       "round": "0.001"
     },
     {
       "name": "p_bonds",
-      "value": "70",
+      "value": "700",
       "min": "0",
-      "max": "100",
+      "max": "1000",
       "round": "1"
     },
     {
       "name": "p_nikkei",
-      "value": "30",
+      "value": "300",
       "min": "0",
-      "max": "100",
+      "max": "1000",
       "round": "1"
     },
     {
       "name": "p_sp",
       "value": "0",
       "min": "0",
-      "max": "100",
+      "max": "1000",
       "round": "1"
     },
     {
@@ -72,7 +72,15 @@
       "round": "1"
     },
     {
-        "name": "showSavings",
+        "name": "showNikkei",
+        "value": true
+    },
+    {
+        "name": "showSP",
+        "value": true
+    },
+    {
+        "name": "showBonds",
         "value": true
     }
   ],
@@ -100,10 +108,10 @@
           "ticks": 6
         },
         "yAxis": {
-          "title": "Investment Value (Dollars)",
+          "title": "Investment Value (Thousands of Yen)",
           "orient": "left",
           "min": 0,
-          "max": 500,
+          "max": 5000,
           "ticks": 5
         },
         "objects": [
@@ -129,42 +137,45 @@
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "100*(calcs.i_sp)^(x)",
+                "fn": "1000*(calcs.i_sp)^(x)",
                 "samplePoints": 100
               },
               "color": "colors.savings",
               "label": {
                 "text": "\\text{S\\&P 500}",
                 "x": 20
-              }
+              },
+              "show": "params.showSP"
             }
           },
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "100*(calcs.i_nikkei)^(x)",
+                "fn": "1000*(calcs.i_nikkei)^(x)",
                 "samplePoints": 100
               },
               "color": "d3.color('red')",
               "label": {
                 "text": "\\text{Nikkei}",
                 "x": 20
-              }
+              },
+              "show": "params.showNikkei"
             }
           },
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "100*(calcs.i_bonds)^(x)",
+                "fn": "1000*(calcs.i_bonds)^(x)",
                 "samplePoints": 100
               },
               "color": "d3.color('orange')",
               "label": {
                 "text": "\\text{10Y bonds}",
                 "x": 20
-              }
+              },
+              "show": "params.showBonds"
             }
           },
           // {
@@ -286,28 +297,37 @@
               },
               {
                 "param": "p_nikkei",
-                "label": "\\text{Nikkei percentage}"
+                "label": "\\text{Amount in Nikkei}"
               },
               {
                 "param": "p_sp",
-                "label": "\\text{S\\&P 500 percentage}"
+                "label": "\\text{Amount in S\\&P 500}"
               },
               {
                 "param": "p_bonds",
-                "label": "\\text{10Y Bond percentage}"
+                "label": "\\text{Amount in 10Y Bond}"
               }
             ],
-            // "checkboxes": [
-            // {
-            //     "param": "showSavings",
-            //     "label": "\\text{Show Savings}"
-            // }],
-            "divs": [
+            "checkboxes": [
               {
-                "html": "Let's say you have 100 yen today and want to invest it. This model illustrates your expected earnings over the next 30 years based upon the way you split your 100 yen among the Nikkei, the S&P500, and the Japanese 10Y bonds."
+                "param": "showNikkei",
+                "label": "\\text{Show Nikkei}"
               },
               {
-                "html": "`With your current choices, you would have ${(calcs.p_nikkei*Math.pow(calcs.i_nikkei, 30)+calcs.p_sp*Math.pow(calcs.i_sp, 30)+calcs.p_bonds*Math.pow(calcs.i_bonds, 30)).toFixed(2)} yen after thirty years.`"
+                "param": "showSP",
+                "label": "\\text{Show S\\&P500}"
+              },
+              {
+                "param": "showBonds",
+                "label": "\\text{Show Bonds}"
+              },
+            ],
+            "divs": [
+              {
+                "html": "Let's say you have 1 million yen today and want to invest it. This model illustrates your expected earnings over the next 30 years based upon the way you split your 1 million yen among the Nikkei, the S&P500, and Japanese 10Y bonds."
+              },
+              {
+                "html": "`With your current choices, you would have ${(calcs.p_nikkei*Math.pow(calcs.i_nikkei, 30)+calcs.p_sp*Math.pow(calcs.i_sp, 30)+calcs.p_bonds*Math.pow(calcs.i_bonds, 30)).toFixed(0) * 1000} yen after thirty years.`"
               },
               // {
               //   "html": "`If you had invested $k_t = ${params.k}$ dollars of principal in period $t$, it would produce an output of $$\\\\color{${colors.production}}{y_t = f(k_t) = ${params.k}^{${params.i_nikkei.toFixed(2)}} = ${Math.pow(params.k,params.i_nikkei).toFixed(2)}}$$`"
