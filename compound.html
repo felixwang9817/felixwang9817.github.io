@@ -1,0 +1,326 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <title>Compound</title>
+    <link href="https://www.econgraphs.org/static/css/kg.0.1.4.css" rel="stylesheet">
+    <script src="https://www.econgraphs.org/static/js/kg.0.1.4.js"></script>
+</head>
+<body>
+
+<div id="diagram" class="kg-container" src="playground"
+     style="width: 80%;margin-right: auto;margin-left: auto;margin-top: 2em;margin-bottom: 2em;">
+
+</div>
+<script>
+    KG.addView("playground", {
+  "schema": "EconSchema",
+  "version": 1,
+  "colors": {
+            "pareto": "colors.green",              //Econgraphs default colors
+            "endowment": "d3.color('steelblue')",   //use D3 colors - see https://github.com/d3/d3-color
+            "pinkish": "d3.rgb(255,0,255)",          //use D3 to parse an RGB color
+            "agentB": "'#CC0000'"                   //use a CSS color directly - note you need the interior single quotes
+        },
+        "params": [
+    {
+      "name": "i_bonds",
+      "value": "0.01",
+      "min": "0",
+      "max": "10",
+      "round": "0.001"
+    },
+    {
+      "name": "i_nikkei",
+      "value": "2.0",
+      "min": "0",
+      "max": "10",
+      "round": "0.001"
+    },
+    {
+      "name": "i_sp",
+      "value": "4.0",
+      "min": "0",
+      "max": "10",
+      "round": "0.001"
+    },
+    {
+      "name": "p_bonds",
+      "value": "70",
+      "min": "0",
+      "max": "100",
+      "round": "1"
+    },
+    {
+      "name": "p_nikkei",
+      "value": "30",
+      "min": "0",
+      "max": "100",
+      "round": "1"
+    },
+    {
+      "name": "p_sp",
+      "value": "0",
+      "min": "0",
+      "max": "100",
+      "round": "1"
+    },
+    {
+      "name": "k",
+      "value": "50",
+      "min": "0",
+      "max": "100",
+      "round": "1"
+    },
+    {
+        "name": "showSavings",
+        "value": true
+    }
+  ],
+  "calcs": {
+    "p_sp": "(params.p_sp.toFixed(2))",
+    "p_nikkei": "(params.p_nikkei.toFixed(2))",
+    "p_bonds": "(params.p_bonds.toFixed(2))",
+    "i_sp": "(100+params.i_sp.toFixed(2))/100",
+    "i_nikkei": "(100+params.i_nikkei.toFixed(2))/100",
+    "i_bonds": "(100+params.i_bonds.toFixed(2))/100",
+    "a": "(params.i_nikkei.toFixed(2))",
+    "dk": "((params.i_sp)*(params.k)).toFixed(2)",
+    "years": "20",
+},
+  "layout": {
+    "type": "OneGraphPlusSidebar",
+    "def": {
+      "graph": {
+        "xAxis": {
+          "title": "Time From Today (Years)",
+          "orient": "bottom",
+          "min": 0,
+          "max": 30,
+          "ticks": 6
+        },
+        "yAxis": {
+          "title": "Investment Value (Dollars)",
+          "orient": "left",
+          "min": 0,
+          "max": 500,
+          "ticks": 5
+        },
+        "objects": [
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                // "fn": "(x)^(params.i_nikkei)",(
+                // "fn": "p_sp*(calcs.i_sp)^(x)+p_nikkei*(calcs.i_nikkei)^(x)+p_bonds*(calcs.i_sp)",
+                // "fn": "calcs.p_sp * (x)^(0)",
+                // "fn": "3x",
+                "fn": "(calcs.p_sp*(calcs.i_sp)^(x)+calcs.p_nikkei*(calcs.i_nikkei)^(x)+calcs.p_bonds*(calcs.i_bonds)^(x))",
+                "samplePoints": 100
+              },
+              "color": "colors.production",
+              "label": {
+                "text": "\\text{Mixed}",
+                "x": 20
+              }
+            }
+          },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "100*(calcs.i_sp)^(x)",
+                "samplePoints": 100
+              },
+              "color": "colors.savings",
+              "label": {
+                "text": "\\text{S\\&P 500}",
+                "x": 20
+              }
+            }
+          },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "100*(calcs.i_nikkei)^(x)",
+                "samplePoints": 100
+              },
+              "color": "d3.color('red')",
+              "label": {
+                "text": "\\text{Nikkei}",
+                "x": 20
+              }
+            }
+          },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "100*(calcs.i_bonds)^(x)",
+                "samplePoints": 100
+              },
+              "color": "d3.color('orange')",
+              "label": {
+                "text": "\\text{10Y bonds}",
+                "x": 20
+              }
+            }
+          },
+          // {
+          //   "type": "Line",
+          //   "def": {
+          //     "slope": "(params.i_sp)",
+          //     "color": "colors.depreciation",
+          //     "label": {
+          //       "text": "\\delta k",
+          //       "x": 85
+          //     }
+          //   }
+          // },
+          // {
+          //   "type": "Curve",
+          //   "def": {
+          //     "univariateFunction": {
+          //       "fn": "(params.i_bonds)*(x)^(params.i_nikkei)",
+          //       "samplePoints": 200
+          //     },
+          //     "color": "colors.savings",
+          //     "label": {
+          //       "text": "sf(k)",
+          //       "x": 95
+          //     },
+          //     "show": "params.showSavings"
+          //   }
+          // },
+          // {
+          //   "type": "Segment",
+          //   "def": {
+          //     "a": [
+          //       "params.k",
+          //       0
+          //     ],
+          //     "b": [
+          //       "params.k",
+          //       10
+          //     ],
+          //     "stroke": "gray",
+          //     "drag": [
+          //       {
+          //         "directions": "x",
+          //         "param": "k",
+          //         "expression": "params.k + drag.dx"
+          //       }
+          //     ]
+          //   }
+          // },
+          // {
+          //   "type": "Point",
+          //   "def": {
+          //     "coordinates": [
+          //       "params.k",
+          //       "(params.i_bonds)*(params.k)^(params.i_nikkei)"
+          //     ],
+          //     "color": "colors.savings",
+          //     "drag": [
+          //       {
+          //         "directions": "x",
+          //         "param": "k",
+          //         "expression": "params.k + drag.dx"
+          //       }
+          //     ]
+          //   }
+          // },
+          // {
+          //   "type": "Point",
+          //   "def": {
+          //     "coordinates": [
+          //       "params.k",
+          //       "(params.i_sp)*(params.k)"
+          //     ],
+          //     "color": "colors.depreciation",
+          //     "drag": [
+          //       {
+          //         "directions": "x",
+          //         "param": "k",
+          //         "expression": "params.k + drag.dx"
+          //       }
+          //     ]
+          //   }
+          // },
+          // {
+          //   "type": "Point",
+          //   "def": {
+          //     "coordinates": [
+          //       "params.k",
+          //       "(params.k)^(params.i_nikkei)"
+          //     ],
+          //     "color": "colors.production",
+          //     "drag": [
+          //       {
+          //         "directions": "x",
+          //         "param": "k",
+          //         "expression": "params.k + drag.dx"
+          //       }
+          //     ]
+          //   }
+          // }
+        ]
+      },
+      "sidebar": {
+        "controls": [
+          {
+            "title": "Mixed Investments Model",
+            "sliders": [
+              {
+                "param": "i_nikkei",
+                "label": "\\text{Nikkei interest}"
+              },
+              {
+                "param": "i_sp",
+                "label": "\\text{S\\&P 500 interest}"
+              },
+              {
+                "param": "i_bonds",
+                "label": "\\text{10Y Bond interest}"
+              },
+              {
+                "param": "p_nikkei",
+                "label": "\\text{Nikkei percentage}"
+              },
+              {
+                "param": "p_sp",
+                "label": "\\text{S\\&P 500 percentage}"
+              },
+              {
+                "param": "p_bonds",
+                "label": "\\text{10Y Bond percentage}"
+              }
+            ],
+            // "checkboxes": [
+            // {
+            //     "param": "showSavings",
+            //     "label": "\\text{Show Savings}"
+            // }],
+            "divs": [
+              {
+                "html": "Let's say you have 100 yen today and want to invest it. If you invested all of it in bonds you would have 103 yen in 30 years. If you invested all of it in the Nikkei you would have 181 yen in 30 years. And if you invested all of it in the S\&P500 you would have 324 yen." 
+              },
+              {
+                "html": "`If you had invested $k_t = ${params.k}$ dollars of principal in period $t$, it would produce an output of $$\\\\color{${colors.production}}{y_t = f(k_t) = ${params.k}^{${params.i_nikkei.toFixed(2)}} = ${Math.pow(params.k,params.i_nikkei).toFixed(2)}}$$`"
+              },
+              {
+                "html": "`depending on your asset allocation`"
+              },
+              {
+                "html": "calcs.p_bonds"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+})
+</script>
+</body>
+</html>
