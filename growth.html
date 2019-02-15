@@ -1,0 +1,131 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+    <title>Compound</title>
+    <link href="https://www.econgraphs.org/static/css/kg.0.1.4.css" rel="stylesheet">
+    <script src="https://www.econgraphs.org/static/js/kg.0.1.4.js"></script>
+</head>
+<body>
+
+<div id="diagram" class="kg-container" src="playground"
+     style="width: 80%;margin-right: auto;margin-left: auto;margin-top: 2em;margin-bottom: 2em;">
+
+</div>
+<script>
+    KG.addView("playground", {
+  "schema": "EconSchema",
+  "version": 1,
+  "colors": {
+            "pareto": "colors.green",              //Econgraphs default colors
+            "endowment": "d3.color('steelblue')",   //use D3 colors - see https://github.com/d3/d3-color
+            "pinkish": "d3.rgb(255,0,255)",          //use D3 to parse an RGB color
+            "agentB": "'#CC0000'"                   //use a CSS color directly - note you need the interior single quotes
+        },
+        "params": [
+    {
+      "name": "capital",
+      "value": "100",
+      "min": "0",
+      "max": "200",
+      "round": ".1"
+    },
+    {
+      "name": "saving",
+      "value": "0.26",
+      "min": ".1",
+      "max": "1",
+      "round": "0.01"
+    },
+    {
+      "name": "elasticity",
+      "value": "0.5",
+      "min": "0",
+      "max": "1",
+      "round": "0.01"
+    },
+    {
+        "name": "showSavings",
+        "value": true
+    }
+  ],
+  "calcs": {
+    // "a": "(params.elasticity.toFixed(2))",
+    // "dk": "((params.capital)*(params.k)).toFixed(2)",
+},
+  "layout": {
+    "type": "OneGraphPlusSidebar",
+    "def": {
+      "graph": {
+        "xAxis": {
+          "title": "Time period $t$",
+          "orient": "bottom",
+          "min": 0,
+          "max": 1,
+          "ticks": 10
+        },
+        "yAxis": {
+          "title": "GDP Output per worker ($Y/L$)",
+          "orient": "left",
+          "min": 0,
+          "max": 10
+        },
+        "objects": [
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "104.83^((1-params.elasticity^(x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(x-1))/(1-params.elasticity)) * params.capital",
+                "samplePoints": 200
+              },
+              "color": "colors.production",
+              "label": {
+                "text": "f(t)",
+                "x": 75
+              }
+            }
+          },
+        ]
+      },
+      "sidebar": {
+        "controls": [
+          {
+            "title": "Solow-Swan Growth Accounting Model",
+            "sliders": [
+              {
+                "param": "elasticity",
+                "label": "\\text{Elasticity}"
+              },
+              {
+                "param": "capital",
+                "label": "\\text{Capital}"
+              },
+              {
+                "param": "saving",
+                "label": "\\text{Saving}"
+              }
+            ],
+            // "checkboxes": [
+            // {
+            //     "param": "showSavings",
+            //     "label": "\\text{Show Savings}"
+            // }],
+            "divs": [
+              {
+                "html": "`We can model the output per worker as $Output Per Worker = 104.83 * ${params.capital.toFixed(2)}^{${params.elasticity.toFixed(2)}}$ where $104.83$ is multifactor productivity in Japan.`" 
+              },
+              {
+                "html": "`Given the savings recurrence $Saving_t = SavingRate_t * q_t$ and capital stock replacement $k_{t+1} = Saving_t,$`" 
+              },
+              {
+                "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = 104.83^{{1 - ${params.elasticity.toFixed(2)}^{t-1}}/1-${params.elasticity.toFixed(2)}} * ${params.saving.toFixed(2)}^{${params.elasticity.toFixed(2)}({1 - ${params.elasticity.toFixed(2)}^{t-1}})/1-${params.elasticity.toFixed(2)}} * ${params.capital.toFixed(2)}$`" 
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+})
+</script>
+</body>
+</html>
