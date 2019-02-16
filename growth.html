@@ -1,7 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
-    <title>Solow-Swan Growth Accounting Model</title>
+    <title>Compound</title>
     <link href="https://www.econgraphs.org/static/css/kg.0.1.4.css" rel="stylesheet">
     <script src="https://www.econgraphs.org/static/js/kg.0.1.4.js"></script>
 </head>
@@ -24,23 +24,23 @@
         "params": [
     {
       "name": "capital",
-      "value": "100",
-      "min": "0",
-      "max": "200",
+      "value": "150000",
+      "min": "10000",
+      "max": "200000",
       "round": ".1"
     },
     {
       "name": "saving",
       "value": "0.26",
       "min": ".1",
-      "max": "1",
+      "max": ".9",
       "round": "0.01"
     },
     {
       "name": "elasticity",
       "value": "0.5",
-      "min": "0",
-      "max": "1",
+      "min": ".1",
+      "max": ".9",
       "round": "0.01"
     },
     {
@@ -60,30 +60,72 @@
           "title": "Time period $t$",
           "orient": "bottom",
           "min": 0,
-          "max": 1,
+          "max": 100,
           "ticks": 10
         },
         "yAxis": {
-          "title": "GDP Output per worker ($Y/L$)",
+          "title": "GDP Output per Laborer (Billions of Yen / Laborer)",
           "orient": "left",
           "min": 0,
-          "max": 10
+          "max": 150000
         },
         "objects": [
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-params.elasticity^(x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(x-1))/(1-params.elasticity)) * params.capital",
+                "fn": "104.83^((1-params.elasticity^(.02*x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(.02*x-1))/(1-params.elasticity)) * params.capital",
                 "samplePoints": 200
               },
               "color": "colors.production",
               "label": {
                 "text": "f(t)",
-                "x": 75
+                "x": 10
               }
             }
           },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 120000",
+                "samplePoints": 200
+              },
+              "color": "colors.green",
+              "label": {
+                "text": "status quo",
+                "x": 70
+              }
+            }
+          },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .9)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 120000",
+                "samplePoints": 200
+              },
+              "color": "d3.color('red')",
+              "label": {
+                "text": "increased savings",
+                "x": 30
+              }
+            }
+          },
+          {
+            "type": "Curve",
+            "def": {
+              "univariateFunction": {
+                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 150000",
+                "samplePoints": 200
+              },
+              "color": "d3.color('orange')",
+              "label": {
+                "text": "increased capital",
+                "x": 50
+              }
+            }
+          }
         ]
       },
       "sidebar": {
