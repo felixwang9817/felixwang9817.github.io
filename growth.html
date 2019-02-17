@@ -60,7 +60,7 @@
           "title": "Time period $t$",
           "orient": "bottom",
           "min": 0,
-          "max": 100,
+          "max": 65,
           "ticks": 10
         },
         "yAxis": {
@@ -74,14 +74,14 @@
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-params.elasticity^(.02*x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(.02*x-1))/(1-params.elasticity)) * params.capital",
+                "fn": "104.83^((1-params.elasticity^(.015*x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(.015*x-1))/(1-params.elasticity)) * params.capital",
                 "samplePoints": 200
               },
               "color": "colors.production",
-              "label": {
-                "text": "f(t)",
-                "x": 10
-              }
+              // "label": {
+              //   "text": "\\text{f(t)}",
+              //   "x": 10
+              // }
             }
           },
           {
@@ -92,10 +92,10 @@
                 "samplePoints": 200
               },
               "color": "colors.green",
-              "label": {
-                "text": "status quo",
-                "x": 70
-              }
+              // "label": {
+              //   "text": "status quo",
+              //   "x": 70
+              // }
             }
           },
           {
@@ -106,10 +106,10 @@
                 "samplePoints": 200
               },
               "color": "d3.color('red')",
-              "label": {
-                "text": "increased savings",
-                "x": 30
-              }
+              // "label": {
+              //   "text": "increased savings",
+              //   "x": 30
+              // }
             }
           },
           {
@@ -120,10 +120,10 @@
                 "samplePoints": 200
               },
               "color": "d3.color('orange')",
-              "label": {
-                "text": "increased capital",
-                "x": 50
-              }
+              // "label": {
+              //   "text": "increased capital",
+              //   "x": 50
+              // }
             }
           }
         ]
@@ -143,7 +143,7 @@
               },
               {
                 "param": "saving",
-                "label": "\\text{Saving}"
+                "label": "\\text{SavingRate}"
               }
             ],
             // "checkboxes": [
@@ -152,14 +152,20 @@
             //     "label": "\\text{Show Savings}"
             // }],
             "divs": [
-              {
-                "html": "`We can model the output per worker as $Output Per Worker = 104.83 * ${params.capital.toFixed(2)}^{${params.elasticity.toFixed(2)}}$ where $104.83$ is multifactor productivity in Japan.`" 
+              // {
+              //   "html": "`We can model the output per worker as $Output Per Worker = 104.83 * ${params.capital.toFixed(2)}^{${params.elasticity.toFixed(2)}}$ where $104.83$ is multifactor productivity in Japan.`" 
+              // },
+               {
+                "html": "`We can model the output per worker as $Output Per Worker = MFP * capital^{elasticity}$ where $MFP = 104.83$ is multifactor productivity in Japan.`" 
               },
               {
                 "html": "`Given the savings recurrence $Saving_t = SavingRate_t * q_t$ and capital stock replacement $k_{t+1} = Saving_t,$`" 
               },
+              // {
+              //   "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = 104.83^{{1 - ${params.elasticity.toFixed(2)}^{t-1}}/1-${params.elasticity.toFixed(2)}} * ${params.saving.toFixed(2)}^{${params.elasticity.toFixed(2)}({1 - ${params.elasticity.toFixed(2)}^{t-1}})/1-${params.elasticity.toFixed(2)}} * ${params.capital.toFixed(2)}$`" 
+              // }
               {
-                "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = 104.83^{{1 - ${params.elasticity.toFixed(2)}^{t-1}}/1-${params.elasticity.toFixed(2)}} * ${params.saving.toFixed(2)}^{${params.elasticity.toFixed(2)}({1 - ${params.elasticity.toFixed(2)}^{t-1}})/1-${params.elasticity.toFixed(2)}} * ${params.capital.toFixed(2)}$`" 
+                "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = MFP^{{1 - elasticity^{t-1}}/1-elasticity}$ $* savings^{elasticity({1 - elasticity^{t-1}})/1-elasticity} * capital.$`" 
               }
             ]
           }
