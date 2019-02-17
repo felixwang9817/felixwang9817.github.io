@@ -155,18 +155,18 @@
               // {
               //   "html": "`We can model the output per worker as $Output Per Worker = 104.83 * ${params.capital.toFixed(2)}^{${params.elasticity.toFixed(2)}}$ where $104.83$ is multifactor productivity in Japan.`" 
               // },
-               {
-                "html": "`We can model the output per worker as $Output Per Worker = MFP * capital^{elasticity}$ where $MFP = 104.83$ is multifactor productivity in Japan.`" 
+              {
+                "html": "We can model the output per worker as $\\text{Output Per Worker} = \\text{MFP} \\cdot \\text{capital}^{\\text{elasticity}}$ where $\\text{MFP} = 104.83$ represents the multifactor productivity in Japan." 
               },
               {
-                "html": "`Given the savings recurrence $Saving_t = SavingRate_t * q_t$ and capital stock replacement $k_{t+1} = Saving_t,$`" 
+                "html": "Given the savings recurrence $\\text{Saving}_t = \\text{SavingRate}_t \\cdot q_t$ and capital stock replacement $k_{t+1} =\\text{Saving}_t$, we can derive the output per worker after some number of time periods $t$ as $\\text{OPW} = \\text{MFP}^{{1 - \\text{elasticity}^{t-1}}/1-\\text{elasticity}} \\cdot$ $\\text{savings}^{\\text{elasticity}({1 - \\text{elasticity}^{t-1}})/1-\\text{elasticity}} \\cdot \\text{capital}.$" 
               },
               // {
               //   "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = 104.83^{{1 - ${params.elasticity.toFixed(2)}^{t-1}}/1-${params.elasticity.toFixed(2)}} * ${params.saving.toFixed(2)}^{${params.elasticity.toFixed(2)}({1 - ${params.elasticity.toFixed(2)}^{t-1}})/1-${params.elasticity.toFixed(2)}} * ${params.capital.toFixed(2)}$`" 
               // }
-              {
-                "html": "`We can derive the output per worker after some number of time periods $t$ as $Output Per Worker = MFP^{{1 - elasticity^{t-1}}/1-elasticity}$ $* savings^{elasticity({1 - elasticity^{t-1}})/1-elasticity} * capital.$`" 
-              }
+              // {
+              //   "html": "We can derive the output per worker after some number of time periods $t$ as $\\text{Output Per Worker} = \\text{MFP}^{{1 - \\text{elasticity}^{t-1}}/1-\\text{elasticity}}$ $* \\text{savings}^{\\text{elasticity}({1 - \\text{elasticity}^{t-1}})/1-\\text{elasticity}} * \\text{capital}.$" 
+              // }
             ]
           }
         ]
