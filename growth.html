@@ -24,7 +24,7 @@
         "params": [
     {
       "name": "capital",
-      "value": "150000",
+      "value": "180000",
       "min": "10000",
       "max": "200000",
       "round": ".1"
@@ -64,66 +64,66 @@
           "ticks": 10
         },
         "yAxis": {
-          "title": "GDP Output per Laborer (Billions of Yen / Laborer)",
+          "title": "GDP Output per Laborer (Ten Billions of Yen / Laborer)",
           "orient": "left",
           "min": 0,
-          "max": 150000
+          "max": 15000
         },
         "objects": [
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-params.elasticity^(.015*x-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(.015*x-1))/(1-params.elasticity)) * params.capital",
+                "fn": "104.83^((1-params.elasticity^(.015*(x)-1))/(1-params.elasticity)) * (1- params.saving)^(params.elasticity*(1-params.elasticity^(.015*(x)-1))/(1-params.elasticity)) * params.capital",
                 "samplePoints": 200
               },
               "color": "colors.production",
-              // "label": {
-              //   "text": "\\text{f(t)}",
-              //   "x": 10
-              // }
+              "label": {
+                "text": "\\text{variable}",
+                "x": 35
+              }
             }
           },
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 120000",
+                "fn": "104.83^((1-.5^(.015*(x)-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*(x)-1))/(1-.5)) * 120000",
                 "samplePoints": 200
               },
               "color": "colors.green",
-              // "label": {
-              //   "text": "status quo",
-              //   "x": 70
-              // }
+              "label": {
+                "text": "\\text{status quo}",
+                "x": 35
+              }
             }
           },
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .9)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 120000",
+                "fn": "104.83^((1-.5^(.015*(x)-1))/(1-.5)) * (1- .9)^(.5*(1-.5^(.015*(x)-1))/(1-.5)) * 120000",
                 "samplePoints": 200
               },
               "color": "d3.color('red')",
-              // "label": {
-              //   "text": "increased savings",
-              //   "x": 30
-              // }
+              "label": {
+                "text": "\\text{increased savings}",
+                "x": 35
+              }
             }
           },
           {
             "type": "Curve",
             "def": {
               "univariateFunction": {
-                "fn": "104.83^((1-.5^(.015*x-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*x-1))/(1-.5)) * 150000",
+                "fn": "104.83^((1-.5^(.015*(x)-1))/(1-.5)) * (1- .26)^(.5*(1-.5^(.015*(x)-1))/(1-.5)) * 150000",
                 "samplePoints": 200
               },
               "color": "d3.color('orange')",
-              // "label": {
-              //   "text": "increased capital",
-              //   "x": 50
-              // }
+              "label": {
+                "text": "\\text{increased capital}",
+                "x": 35
+              }
             }
           }
         ]
